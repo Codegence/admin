@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/foundation-icons.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/commons.css">
+    <link rel="stylesheet" href="css/home.css">
+
+    <script src="js/vendor/modernizr.js"></script>
+    <title>Codegense</title>
+</head>
+<body class="page-background" ng-controller="HomeController">
+<!-- menu -->
+<nav class="top-bar" data-topbar id="topBar">
+    <ul class="title-area">
+        <li class="name">
+            <h1><a href="#" style="font-family: codegenceFont">CODEGENSE</a></h1>
+        </li>
+    </ul>
+
+    <section class="top-bar-section">
+        <ul class="right">
+            <li><a href="" ng-click="soundStopPlay($event)"><i class="fi-volume"></i></a></li>
+        </ul>
+    </section>
+</nav>
+<div class="row" style="margin-top: 20px">
+    <div class="large-2 columns panel" id="leftContainer">
+        <div class="row">
+            <div class="large-12 large-centered columns">
+                <button class="button small" data-reveal-id="addSectorModal" ng-click="addSector()">Agregar Sector</button>
+            </div>
+        </div>
+        <ul class="side-nav">
+            <li ng-repeat="sector in sectores" class="animated pulse">
+                <a href="" ng-click="showSector(sector)">[[isGreaterThan(sector.name)]]</a>
+            </li>
+        </ul>
+    </div>
+    <div class="large-10 columns">
+        <div id="sector_panel" ng-view class="animated fadeInRightBig"></div>
+    </div>
+</div>
+
+<!-- modal para agregar sectores-->
+<div id="addSectorModal" class="reveal-modal medium" data-reveal>
+    <h2>Agregar Nuevo Sector</h2>
+    <form>
+        <div class="row">
+            <div class="large-10">
+                <div class="row">
+                    <div class="large-4 columns">
+                        <label for="label-nombre" class="right inline">Nombre</label>
+                    </div>
+                    <div class="large-6 columns">
+                        <input type="text" id="label-nombre" placeholder="nombre del sector" autofocus ng-model="newSector.name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-4 columns">
+                        <label for="label-altura" class="right inline">Altura</label>
+                    </div>
+                    <div class="large-6 columns">
+                        <div class="row">
+                            <div class="large-10 columns">
+                                <div class="range-slider radius" bind-data-slider ng-model="newSector.height" data-slider data-options="display_selector: #sliderHeight;">
+                                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                                    <span class="range-slider-active-segment"></span>
+                                </div>
+                            </div>
+                            <div class="large-2 columns margin_top_16px">
+                                <span id="sliderHeight"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-4 columns">
+                        <label for="label-ancho" class="right inline">Ancho</label>
+                    </div>
+                    <div class="large-6 columns">
+                        <div class="row">
+                            <div class="large-10 columns">
+                                <div class="range-slider radius" bind-data-slider ng-model="newSector.width"
+                                     data-slider data-options="display_selector: #sliderWidth;">
+                                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                                    <span class="range-slider-active-segment"></span>
+                                </div>
+                            </div>
+                            <div class="large-2 columns margin_top_16px">
+                                <span id="sliderWidth"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-4 columns">
+                        <label for="label-rock" class="right inline">Densidad de la roca</label>
+                    </div>
+                    <div class="large-6 columns">
+                        <div class="row">
+                            <div class="large-10 columns">
+                                <div class="range-slider radius" bind-data-slider ng-model="newSector.rockDensity"
+                                     data-slider data-options="step: 0.01; start: 0.01; end: 0.1; display_selector: #sliderRockDensity;">
+                                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                                    <span class="range-slider-active-segment"></span>
+                                </div>
+                            </div>
+                            <div class="large-2 columns margin_top_16px">
+                                <span id="sliderRockDensity"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-4 columns">
+                        <label for="label-resource" class="right inline">Densidad de los recursos</label>
+                    </div>
+                    <div class="large-6 columns">
+                        <div class="row">
+                            <div class="large-10 columns">
+                                <div class="range-slider radius" bind-data-slider ng-model="newSector.resDensity"
+                                     data-slider data-options="step: 0.01; start: 0.01; end: 0.1;display_selector: #sliderResDensity;">
+                                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                                    <span class="range-slider-active-segment"></span>
+                                </div>
+                            </div>
+                            <div class="large-2 columns margin_top_16px">
+                                <span id="sliderResDensity"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="large-5 large-offset-7 columns">
+            <button class="button" ng-click="closeModal()">Cancelar</button>
+            <button class="button"  ng-click="saveSector()">Guardar</button>
+        </div>
+    </div>
+
+</div>
+<!-- fin del modal-->
+
+
+<!--Sounds Efects -->
+<audio autoplay id="open-efect">
+    <source src="sound/ttatra01.wav" type="audio/wav">
+</audio>
+<!--Intro Audio -->
+<audio autoplay loop id="intro">
+    <source src="sound/intro.mp3" type="audio/mpeg">
+</audio>
+<img src="img/right-door.jpg" id="right-door" class="door right-door">
+<img src="img/left-door.jpg" id="left-door" class="door left-door">
+<script data-main="js/config/init" src="js/require.js" ></script>
+</body>
+</html>

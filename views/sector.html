@@ -1,0 +1,71 @@
+<link href="/css/sector.css" rel="stylesheet">
+<div class="row padding_left_10"> <!-- style="padding-left: 10px" -->
+    <div class="large-12 large-centered columns panel">
+        <div class="row">
+            <div class="large-12 columns">
+                <div class="row"> <!-- botones de accion -->
+                    <div class="large-12 columns">
+                        <button class="button small"  data-reveal-id="addFactionModal" ng-click="addFaction()">Agregar Faccion</button>
+                        <a class="button small" ng-click="startSector()">Iniciar Batalla</a>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th width="70"></th>
+                            <th width="150">Faccion</th>
+                            <th width="350">Url</th>
+                            <th width="150">Estado</th>
+                            <th width="100"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="faction in selectedSector.factions">
+                        <td><i class="fi-torso avatar"></i></td>
+                        <td><span>[[faction.name]]</span></td>
+                        <td><span>[[faction.uri]]</span></td>
+                        <td><span class="success label radius font_size_14">vivo</span></td>
+                        <td>
+                            <button class="button alert radius tiny delete_button" ng-click="removeFaction(faction)">
+                                <i class="fi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addFactionModal" class="reveal-modal medium" data-reveal>
+    <h2>Agregar Nueva Faccion</h2>
+    <form>
+        <div class="row">
+            <div class="large-10">
+                <div class="row">
+                    <div class="large-4 columns">
+                        <label for="label-nombre" class="right inline">Nombre</label>
+                    </div>
+                    <div class="large-8 columns">
+                        <input type="text" id="label-nombre" placeholder="nombre de la faccion" autofocus ng-model="newFaction.name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-4 columns">
+                        <label for="label-url" class="right inline">URL</label>
+                    </div>
+                    <div class="large-8 columns">
+                        <input type="text" id="label-url" placeholder="url de la faccion" autofocus ng-model="newFaction.uri">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="large-5 large-offset-7 columns">
+            <button class="button" ng-click="closeModal()">Cancelar</button>
+            <button class="button" ng-click="saveFaction()">Guardar</button>
+        </div>
+    </div>
+</div>

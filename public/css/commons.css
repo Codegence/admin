@@ -1,0 +1,16 @@
+@font-face {
+    font-family: codegenceFont;
+    src: url(../fonts/Starcraft%20Normal.ttf);
+}
+
+html {
+    overflow-x: hidden;
+}
+
+.margin_top_16px{
+    margin-top: 16px;
+}
+
+.font_size_14 {
+    font-size: 14px
+}

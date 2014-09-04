@@ -1,0 +1,21 @@
+.page-background {
+    background-image: url('../img/planet_background.jpg');
+    background-repeat: no-repeat;
+}
+
+.door{
+    z-index: 99;
+    width: 50%;
+    height: 100%;
+    position:absolute;
+    top:0;
+    overflow: hidden;
+}
+
+.left-door{
+    left:0;
+}
+
+.right-door{
+    left:50%;
+}

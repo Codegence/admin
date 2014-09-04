@@ -1,0 +1,32 @@
+.padding_left_10 {
+    padding-left: 10px
+}
+
+.separador {
+    border-bottom: solid #c0c0c0 1px ;
+}
+
+table{
+    border :none;
+}
+
+table tr:nth-child(even) {
+    background-color: transparent;
+}
+table tr:nth-child(odd) {
+    background-color:transparent;
+}
+
+table tbody tr:hover {
+    background-color: #e7e7e7;
+}
+
+.delete_button {
+    padding: 5px 15px !important;
+    margin: 0;
+    font-size: 18px !important;
+}
+
+.avatar {
+    font-size: 20px;
+}
