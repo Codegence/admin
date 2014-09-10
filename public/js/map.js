@@ -111,7 +111,7 @@ function handleUpdateSector(event, data) {
             if(val.position !== undefined)
                 obj.setPosition({x:toPx(val.position[0]), y:sectorHeight - toPx(val.position[1])});
             if(val.rotation !== undefined)
-                obj.rotation(-val.rot * 180 / Math.PI);
+                obj.rotation(-val.rotation * 180 / Math.PI);
         } else
             console.log("Update UNDEFINED " + JSON.stringify(val));
     });
