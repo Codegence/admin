@@ -10,13 +10,13 @@ var MAXIMUN_HEIGHT = 1000;
 var MINIMUN_ROCK_DENSITY = 0.01;
 var MINIMUN_RESOURCE_DENSITY = 0.01;//TODO chequear esto
 
-function Sector(name,type,width,height,rockDesnsity,resDensity){
+function Sector(name,type,width,height,rockDesnsity,resourceDensity){
     this.type = type || "random";
     this.name = name;
     this.width = width || MINIMUN_WIDTH;
     this.height = height || MINIMUM_HEIGHT;
     this.rockDensity =rockDesnsity || 0.01;
-    this.resDensity = resDensity || 0.01;
+    this.resourceDensity = resourceDensity || 0.01;
     this.running = false;
     this.id = null;
     this.factions = [];
@@ -75,11 +75,11 @@ Sector.prototype.validate = function(){
         throw new Error("La densidad de la roca no puede ser menor o igual a cero");
     }
 
-    if(isEmpty(this.resDensity)){
+    if(isEmpty(this.resourceDensity)){
         throw new Error("La densidad de los recursos no puede ser vacio");
     }
 
-    if(this.resDensity <= 0){
+    if(this.resourceDensity <= 0){
         throw new Error("La densidad de los recursos no puede ser menor o igual a cero");
     }
 }
