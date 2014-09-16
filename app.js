@@ -34,6 +34,18 @@ app.get('/',home.index);
 app.get('/sector/:id',home.sector);
 app.get('/map',map.start);
 
+/**
+ * Captura de excepciones inesperadas
+ */
+process.on('uncaughtException', function ( err ) {
+    console.error("hubo un error inesperado, se cerrara el servidor");
+    console.error(err);
+    process.exit(1);
+});
+
+/**
+ * Inicio del servidor
+ */
 http.createServer(app).listen('3000',function(){
     console.log('Servidor de pruebas levantado en el puerto 3000');
 });
