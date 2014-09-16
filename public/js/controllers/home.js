@@ -56,7 +56,7 @@ module.controller('HomeController',function($scope,$filter,WorldService,$locatio
         try {
             $scope.newSector.height = parseInt($scope.newSector.height);
             $scope.newSector.width = parseInt($scope.newSector.width);
-            $scope.newSector.resDensity = parseFloat($scope.newSector.resDensity);
+            $scope.newSector.resourceDensity = parseFloat($scope.newSector.resourceDensity);
             $scope.newSector.rockDensity = parseFloat($scope.newSector.rockDensity);
             $scope.newSector.validate();
         }catch(Error){

@@ -75,7 +75,7 @@ define('app',['angular'],function(){
     );
 
     app.constant('globals',{
-        "host": "localhost:8080",
+        "host": "172.17.201.138:8080",
         "protocol": "http"
     });
 
