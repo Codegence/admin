@@ -27,20 +27,13 @@ module.controller('HomeController',function($scope,$filter,WorldService,$locatio
 
     getAllSectors();
 
-
     $scope.soundStopPlay = function(event){
-        var sound = document.getElementById('intro');
         var icon = angular.element(event.target);
         icon = !icon.html() ? icon : icon.children();
         if(icon.hasClass("fi-volume")){
-            sound.pause();
-            icon.removeClass("fi-volume");
-            icon.addClass("fi-volume-strike");
-            sound.currentTime = 0;
+            Utilities.stopIntro();
         }else{
-            sound.play();
-            icon.removeClass("fi-volume-strike");
-            icon.addClass("fi-volume");
+            Utilities.playIntro();
         }
     };
 

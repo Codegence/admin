@@ -16,7 +16,8 @@ require.config({
         "directives":"directives",
         //"x3dom": "http://www.x3dom.org/download/x3dom",
         "index": "controllers/home",
-        "angular-route":"angular-route.min"
+        "angular-route":"angular-route.min",
+        "angular-cookies":"angular-cookies"
     },
     shim:{
         "angular":{
@@ -28,6 +29,9 @@ require.config({
         "angular-route" :{
             "deps":['angular']
         },
+        "angular-cookies":{
+            "deps":['angular']
+        },
         "foundation" :{
             deps: ["jquery"],
             init: function(){
@@ -35,7 +39,7 @@ require.config({
             }
         },
         "init":{
-          deps:['angular','foundation','angular-route']
+          deps:['angular','foundation','angular-route','angular-cookies']
         },
         "index" :{
             deps:['app','services/utilities','services/world_service',"models/sector","directives/slider_range_bind","controllers/sector"],
@@ -50,8 +54,8 @@ require.config({
 });
 
 // Angular Configuration
-define('app',['angular'],function(){
-    var app = angular.module(appName,['ngRoute']);
+define('app',['angular','angular-cookies'],function(){
+    var app = angular.module(appName,['ngRoute','ngCookies']);
     app.config(function ($interpolateProvider,$httpProvider,$routeProvider) {
             $interpolateProvider.startSymbol('[[');
             $interpolateProvider.endSymbol(']]');
@@ -74,7 +78,7 @@ define('app',['angular'],function(){
         }
     );
 
-    app.constant('globals',{
+    app.constant('globals', {
         "host": "172.17.201.138:8080",
         //"host": "localhost:8080",
         "protocol": "http"
@@ -83,6 +87,14 @@ define('app',['angular'],function(){
     app.factory('domain',['globals',function(globals){
         return globals.protocol  + "://" + globals.host + "/";
     }]);
+
+   app.run(function(Utilities,$cookies){
+       if($cookies.soundOff === "true"){
+           Utilities.stopIntro();
+       }else{
+           Utilities.playIntro();
+       }
+   })
 
     app.init = function() {
         angular.bootstrap(document, [appName]);
