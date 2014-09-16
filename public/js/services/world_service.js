@@ -23,8 +23,8 @@ module.service("WorldService", ['$http','domain', function ($http, domain) {
         this.patchSector = function (successCallback, errorCallback, dataObject) {
            patch(successCallback,errorCallback,"sectors/" + dataObject.id,dataObject);
         };
-        this.removeSector = function(successCallback, errorCallback,dataObject){
-           remove(successCallback,errorCallback,"sectors/" + dataObject.id,dataObject);
+        this.removeSector = function(successCallback, errorCallback,dataObjectId){
+           remove(successCallback,errorCallback,"sectors/" + dataObjectId);
         };
 
         /**

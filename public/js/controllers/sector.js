@@ -50,4 +50,5 @@ module.controller('SectorCtrl',function($scope,WorldService,Utilities){
             alert("hubo un error al eliminar la faccion");
         },$scope.selectedSector.id,faction.id);
     };
+
 });

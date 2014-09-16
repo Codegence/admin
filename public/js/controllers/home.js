@@ -89,7 +89,7 @@ module.controller('HomeController',function($scope,$filter,WorldService,$locatio
         var element = $('#sector_panel');
         if(element && element.hasClass('fadeInRightBig')) {
             element.removeClass('fadeInRightBig');
-            element.addClass('fadeOutDownBig').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function (event) {
+            element.addClass('fadeOutDownBig').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                 $location.path('/sector/' + sector.name);
                 $scope.$apply();
             });
@@ -105,6 +105,21 @@ module.controller('HomeController',function($scope,$filter,WorldService,$locatio
               alert('hubo un error al intentar iniciar el juego');
             },{"id":$scope.selectedSector.id,"state":"start"});
     }
+
+    /**
+     * remover el sector
+     */
+    $scope.removeSector = function(){
+        var element = $('#sector_panel');
+        WorldService.removeSector(function() {
+            $scope.sectores.splice($scope.sectores.indexOf($scope.selectedSector),1);
+            element.removeClass('fadeInRightBig');
+            element.addClass('fadeOutDownBig');
+        },function(){
+            alert("hubo un error al eliminar el sector");
+        },$scope.selectedSector.id);
+    }
+
     /**
     * efecto de salida del panel del sector
     */
