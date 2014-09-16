@@ -2,7 +2,7 @@
  * Created by gaston on 7/08/14.
  */
 
-var appName = "codegense"
+var appName = "codegence"
 
 require.config({
     baseUrl: "js",
@@ -76,6 +76,7 @@ define('app',['angular'],function(){
 
     app.constant('globals',{
         "host": "172.17.201.138:8080",
+        //"host": "localhost:8080",
         "protocol": "http"
     });
 
