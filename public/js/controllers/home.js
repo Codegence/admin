@@ -96,7 +96,7 @@ module.controller('HomeController',function($scope,$filter,WorldService,$locatio
             window.location.href = '/map?id=' +  $scope.selectedSector.id;
         },function(){
               alert('hubo un error al intentar iniciar el juego');
-            },{"id":$scope.selectedSector.id,"state":"start"});
+            },{"id":$scope.selectedSector.id,"status":"start"});
     }
 
     /**
