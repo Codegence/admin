@@ -101,7 +101,13 @@ function handleInitSector(event, data) {
 }
 
 function handleUpdateSector(event, data) {
-    //TODO deletedObjects
+    $(data.deletedObjects).each(function(i, val) {
+        var obj = stage.get('#' + val.id)[0];
+        if(obj !== undefined)
+            obj.remove();
+        else
+            console.log("Remove UNDEFINED " + JSON.stringify(val));
+    });
     $(data.newObjects).each(function(i, val) {
         newImage(val.id, val.position[0], val.position[1], "img/map/" + val.type + ".png", layerObj);
     });
