@@ -30,9 +30,11 @@ app.use(express.static("public"));
 //routes
 var home = require(path.join(__dirname,"controllers/index.js"));
 var map = require(path.join(__dirname,"controllers/map.js"));
+var wglmap = require(path.join(__dirname,"controllers/wglmap.js"));
 app.get('/',home.index);
 app.get('/sector/:id',home.sector);
 app.get('/map',map.start);
+app.get('/wglmap',wglmap.start);
 
 /**
  * Captura de excepciones inesperadas
