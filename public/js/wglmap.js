@@ -15,7 +15,7 @@ var lights = [];
 var scale = 17;
 var cameraTarget;
 var plane, material;
-var modelsPath = 'wglmodels';
+var modelsPath = 'wglmodels/';
 
 $(document).ready(function() {
 	// Init 3D environment
