@@ -160,7 +160,7 @@ function init() {
 	controls.userPanSpeed = 100;
 
 	// Terrain plane
-	var texture = THREE.ImageUtils.loadTexture( "models/maps/terrain.jpg" );
+	var texture = THREE.ImageUtils.loadTexture(modelsPath + 'maps/terrain.jpg');
 	texture.wrapS = THREE.RepeatWrapping;
 	texture.wrapT = THREE.RepeatWrapping;
 	texture.repeat.set( 4, 4 );
