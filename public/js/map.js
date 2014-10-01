@@ -11,6 +11,7 @@ var layerObj;
 function connect(host){
     try{
         socket = new WebSocket(host);
+        socket.binaryType = 'arraybuffer';
 
         socket.onopen = function(evt){
             console.log("Socket open");
