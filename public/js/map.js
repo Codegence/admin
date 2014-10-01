@@ -17,7 +17,11 @@ function connect(host){
         }
 
         socket.onmessage = function(evt){
-            var payload = JSON.parse(evt.data);
+            var inflated = pako.inflate(new Uint8Array(evt.data));
+            var str = "";
+            for (var i=0; i<inflated.length; i++)
+                str += String.fromCharCode(inflated[i]);
+            var payload = JSON.parse(str);
             $('#container').trigger(payload.event, payload.data);
         }
 
