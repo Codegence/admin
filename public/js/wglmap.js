@@ -14,7 +14,7 @@ var models = [];
 var lights = [];
 var scale = 17;
 var cameraTarget;
-var plane, material;
+var plane, material,idRecycler;
 var modelsPath = 'wglmodels/';
 
 $(document).ready(function() {
@@ -87,6 +87,7 @@ function handleInitSector(event, data) {
 				val.type='rock_02';
 			}
 		}
+		if(val.type=='recycler'){ idRecycler = val.id; }
 		objects[val.id] = models[val.type].clone();
 		objects[val.id].position.set(val.position[0]*scale, 0, val.position[1]*scale);
 		objects[val.id].rotation.set(0, val.rotation, 0);
@@ -196,7 +197,11 @@ function init() {
 	models['terminator'] = new THREE.Object3D();
 	loader.load(modelsPath + 'terminator_body.obj', modelsPath + 'terminator_body.mtl', function(object) { object.name = 'terminator_body'; models['terminator'].add(object); });
 	loader.load(modelsPath + 'terminator_turret.obj', modelsPath + 'terminator_turret.mtl', function(object) { object.name = 'terminator_turret'; models['terminator'].add(object);	});
-	loader.load(modelsPath + 'recycler.obj', modelsPath + 'recycler.mtl', function(object) { models['recycler'] = object; });
+	models['recycler'] = new THREE.Object3D();
+	loader.load(modelsPath + 'recycler_body.obj', modelsPath + 'recycler_body.mtl', function(object) { object.name = 'recycler_body';object.children[2].material.emissive.set('#404040'); models['recycler'].add(object); });
+	loader.load(modelsPath + 'recycler_rotor.obj', modelsPath + 'recycler_rotor.mtl', function(object) { object.name = 'recycler_rotor'; models['recycler'].add(object); });
+	loader.load(modelsPath + 'recycler_tank.obj', modelsPath + 'recycler_tank.mtl', function(object) { object.name = 'recycler_tank' ;object.children[2].material.emissive.set('#808080');models['recycler'].add(object); });
+
 
 	// Setup render
 	renderer = new THREE.WebGLRenderer();
@@ -217,6 +222,10 @@ function onWindowResize() {
 
 // Animation
 function animate() {
+	if(idRecycler){
+		objects[idRecycler].getObjectByName('recycler_rotor').rotation.y-=.2;
+		objects[idRecycler].getObjectByName('recycler_tank').rotation.y+=.1;
+	}
 	requestAnimationFrame(animate);
 	render();
 }
