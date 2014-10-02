@@ -13,6 +13,7 @@ var objects = [];
 var models = [];
 var lights = [];
 var scale = 17;
+var counter = 0;
 var cameraTarget;
 var plane, material,idRecycler;
 var modelsPath = 'wglmodels/';
@@ -22,7 +23,7 @@ $(document).ready(function() {
 	init();
 	
 	// Setup connection
-	setup(window.location.search.split('=')[1]);
+	//setup(window.location.search.split('=')[1]);
 	
 	// Animate 3D
 	animate();
@@ -186,21 +187,21 @@ function init() {
 	manager.onProgress = function (item, loaded, total) {
 		console.log(item, loaded, total);
 	};
-	
+
 	// Models loader
 	var loader = new THREE.OBJMTLLoader(manager);
-	loader.load(modelsPath + 'bullet.obj', modelsPath + 'bullet.mtl', function(object) { models['bullet'] = object; });
-	loader.load(modelsPath + 'rock_01.obj', modelsPath + 'rock_01.mtl', function(object) { models['rock_01'] = object; });
-	loader.load(modelsPath + 'rock_02.obj', modelsPath + 'rock_02.mtl', function(object) { models['rock_02'] = object; });
-	loader.load(modelsPath + 'resource.obj', modelsPath + 'resource.mtl', function(object) { models['resource'] = object;	});
-	loader.load(modelsPath + 'drone.obj', modelsPath + 'drone.mtl', function(object) { models['drone'] = object; });
+	loader.load(modelsPath + 'bullet.obj', modelsPath + 'bullet.mtl', function(object) { models['bullet'] = object; checkLoading(); });
+	loader.load(modelsPath + 'rock_01.obj', modelsPath + 'rock_01.mtl', function(object) { models['rock_01'] = object; checkLoading(); });
+	loader.load(modelsPath + 'rock_02.obj', modelsPath + 'rock_02.mtl', function(object) { models['rock_02'] = object; checkLoading(); });
+	loader.load(modelsPath + 'resource.obj', modelsPath + 'resource.mtl', function(object) { models['resource'] = object; checkLoading();	});
+	loader.load(modelsPath + 'drone.obj', modelsPath + 'drone.mtl', function(object) { models['drone'] = object; checkLoading(); });
 	models['terminator'] = new THREE.Object3D();
-	loader.load(modelsPath + 'terminator_body.obj', modelsPath + 'terminator_body.mtl', function(object) { object.name = 'terminator_body'; models['terminator'].add(object); });
-	loader.load(modelsPath + 'terminator_turret.obj', modelsPath + 'terminator_turret.mtl', function(object) { object.name = 'terminator_turret'; models['terminator'].add(object);	});
+	loader.load(modelsPath + 'terminator_body.obj', modelsPath + 'terminator_body.mtl', function(object) { object.name = 'terminator_body'; models['terminator'].add(object); checkLoading(); });
+	loader.load(modelsPath + 'terminator_turret.obj', modelsPath + 'terminator_turret.mtl', function(object) { object.name = 'terminator_turret'; models['terminator'].add(object); checkLoading();	});
 	models['recycler'] = new THREE.Object3D();
-	loader.load(modelsPath + 'recycler_body.obj', modelsPath + 'recycler_body.mtl', function(object) { object.name = 'recycler_body';object.children[2].material.emissive.set('#404040'); models['recycler'].add(object); });
-	loader.load(modelsPath + 'recycler_rotor.obj', modelsPath + 'recycler_rotor.mtl', function(object) { object.name = 'recycler_rotor'; models['recycler'].add(object); });
-	loader.load(modelsPath + 'recycler_tank.obj', modelsPath + 'recycler_tank.mtl', function(object) { object.name = 'recycler_tank' ;object.children[2].material.emissive.set('#808080');models['recycler'].add(object); });
+	loader.load(modelsPath + 'recycler_body.obj', modelsPath + 'recycler_body.mtl', function(object) { object.name = 'recycler_body';object.children[2].material.emissive.set('#404040'); models['recycler'].add(object); checkLoading(); });
+	loader.load(modelsPath + 'recycler_rotor.obj', modelsPath + 'recycler_rotor.mtl', function(object) { object.name = 'recycler_rotor'; models['recycler'].add(object); checkLoading(); });
+	loader.load(modelsPath + 'recycler_tank.obj', modelsPath + 'recycler_tank.mtl', function(object) { object.name = 'recycler_tank' ;object.children[2].material.emissive.set('#808080');models['recycler'].add(object); checkLoading(); });
 
 
 	// Setup render
@@ -210,6 +211,14 @@ function init() {
 
 	// Events
 	window.addEventListener('resize', onWindowResize, false);
+}
+
+// Check loading
+function checkLoading(){
+	counter++;
+	if(counter==10){
+		setup(window.location.search.split('=')[1]);
+	}
 }
 
 // Update viewport on windows resize
