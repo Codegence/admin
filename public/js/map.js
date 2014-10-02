@@ -8,6 +8,12 @@ var stage;
 var layerGround;
 var layerObj;
 
+var audios = {};
+
+var context;
+var bufferLoader;
+
+
 function connect(host){
     try{
         socket = new WebSocket(host);
@@ -40,7 +46,42 @@ function connect(host){
 
 $(document).ready(function() {
     setup(window.location.search.split('=')[1]);
+    initSounds();
 });
+
+function initSounds() {
+    // Fix up prefixing
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  context = new AudioContext();
+
+  bufferLoader = new BufferLoader(
+    context,
+    [
+      {name:"new-bullet", url : "sound/new-bullet.mp3"},
+      {name:"new-drone", url : "sound/new-drone.ogg"},
+      {name:"new-terminator", url : "sound/new-drone.ogg"},
+      {name:"delete-terminator", url: "sound/delete-something.ogg"},
+      {name:"delete-drone", url: "sound/delete-something.ogg"},
+      {name:"delete-recycler", url: "sound/delete-something.ogg"},
+    ],
+    finishedLoading
+    );
+
+  bufferLoader.load();
+}
+
+function finishedLoading() {
+    console.log("Audios loaded!");
+    var source1 = context.createBufferSource();
+  var source2 = context.createBufferSource();
+  source1.buffer = bufferLoader.bufferByName["new-rock"];
+  //source2.buffer = bufferLoader.bufferList[1];
+
+  source1.connect(context.destination);
+ // source2.connect(context.destination);
+  source1.start(0);
+  //source2.start(0);
+}
 
 function setup(sectorId) {
     $('#container').on('initSector', handleInitSector);
@@ -53,7 +94,7 @@ function toPx(meters) {
     return meters * 20;
 }
 
-function newImage(id, x, y, src, layer, noOffset) {
+function newImage(id, x, y, src, layer, type, noOffset) {
     var imageObj = new Image();
     imageObj.onload = function() {
         var img = new Kinetic.Image({
@@ -68,7 +109,28 @@ function newImage(id, x, y, src, layer, noOffset) {
         layer.batchDraw();
     }
     imageObj.src = src;
+    // play "new-" sound
+    var sound = "new-" + type;
+    if( bufferLoader.bufferByName[sound] !== undefined ) {
+          var source1 = context.createBufferSource();
+          source1.buffer = bufferLoader.bufferByName[sound];
+
+          source1.connect(context.destination);
+          source1.start(0);
+    }
+
 }
+
+
+function UrlExists(url)
+{
+    
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status!=404;
+}
+
 
 function handleInitSector(event, data) {
     // create stage
@@ -101,7 +163,7 @@ function handleInitSector(event, data) {
     layerObj = new Kinetic.Layer();
     stage.add(layerObj);
     $(data.objects).each(function(i, val) {
-        newImage(val.id, val.position[0], val.position[1], "img/map/" + val.type + ".png", layerObj);
+        newImage(val.id, val.position[0], val.position[1], "img/map/" + val.type + ".png", layerObj, val.type);
     });
 }
 
@@ -114,7 +176,7 @@ function handleUpdateSector(event, data) {
             console.log("Remove UNDEFINED " + JSON.stringify(val));
     });
     $(data.newObjects).each(function(i, val) {
-        newImage(val.id, val.position[0], val.position[1], "img/map/" + val.type + ".png", layerObj);
+        newImage(val.id, val.position[0], val.position[1], "img/map/" + val.type + ".png", layerObj, val.type);
     });
     $(data.objects).each(function(i, val) {
         var obj = stage.get('#' + val.id)[0];
