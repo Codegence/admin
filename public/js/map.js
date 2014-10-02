@@ -109,8 +109,12 @@ function newImage(id, x, y, src, layer, type, noOffset) {
         layer.batchDraw();
     }
     imageObj.src = src;
-    // play "new-" sound
-    var sound = "new-" + type;
+    playSound("new-" + type);
+
+}
+
+
+function playSound( sound ) {
     if( bufferLoader.bufferByName[sound] !== undefined ) {
           var source1 = context.createBufferSource();
           source1.buffer = bufferLoader.bufferByName[sound];
@@ -118,9 +122,7 @@ function newImage(id, x, y, src, layer, type, noOffset) {
           source1.connect(context.destination);
           source1.start(0);
     }
-
 }
-
 
 function UrlExists(url)
 {
@@ -168,12 +170,13 @@ function handleInitSector(event, data) {
 }
 
 function handleUpdateSector(event, data) {
-    $(data.deletedObjects).each(function(i, val) {
+    $(data.deletedObjects).each(function(i, val) {        
         var obj = stage.get('#' + val.id)[0];
         if(obj !== undefined)
             obj.remove();
         else
             console.log("Remove UNDEFINED " + JSON.stringify(val));
+        playSound("delete-"+val.type);
     });
     $(data.newObjects).each(function(i, val) {
         newImage(val.id, val.position[0], val.position[1], "img/map/" + val.type + ".png", layerObj, val.type);
