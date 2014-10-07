@@ -66,7 +66,7 @@ define('app',['angular','angular-cookies'],function(){
 
             $routeProvider.
                 when('/sector/:id', {
-                    templateUrl: '/sector/:id',
+                    templateUrl: '/sector.html',
                     controller: 'SectorCtrl'
                 }).
                 /*when('/map',{
