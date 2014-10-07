@@ -69,9 +69,11 @@ define('app',['angular','angular-cookies'],function(){
                     templateUrl: '/sector.html',
                     controller: 'SectorCtrl'
                 }).
-                /*when('/map',{
-                    redirectTo: '/map'
-                }).*/otherwise({
+                when('/map',{
+                    redirectTo: '/map.html'
+                }).when('/wglmap',{
+                    redirectTo: '/wglmap.html'
+                }).otherwise({
                     redirectTo: '/'
                 });
 
