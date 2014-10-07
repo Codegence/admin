@@ -18,7 +18,7 @@ function clientErrorHandler(err, req, res, next) {
 var app = express();
 app.engine('html',consolidate.swig);
 app.set('view engine','html');
-app.set('views',path.join(__dirname ,"views"));
+app.set('views',path.join(__dirname ,"public/views"));
 app.use(logger('combined'));
 app.use(bodyParser.text());
 app.use(methodOverride());

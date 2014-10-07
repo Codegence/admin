@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/map.css">
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.1.0.min.js"></script>
+    <script src="js/pako_inflate.min.js"></script>
+    <script src="js/bufferloader.js"></script>
+    <script src="js/map.js"></script>
+</head>
+<body>
+<div class="status-bar status-bar-background">
+    <ul class="side-nav status-bar-border status-bar-content">
+        <li><span>Faction 1</span></li>
+        <li><div class="mineral-icon"></div><span>3665564</span></li>
+        <li><div class="recolector-icon"></div><span>3055</span></li>
+        <li><div class="terminator-icon"></div><span>3055</span></li>
+        <li class="divider"></li>
+        <li><span>Faction 2</span></li>
+        <li><div class="mineral-icon"></div><span>3665564</span></li>
+        <li><div class="recolector-icon"></div><span>3055</span></li>
+        <li><div class="terminator-icon"></div><span>3055</span></li>
+    </ul>
+</div>
+<div id="container"></div>
+<script>
+    $.get( "img/mineral.svg", function( data ) {
+        $(".mineral-icon" ).html(data.documentElement);
+    });
+    $.get( "img/recolector.svg", function( data ) {
+        $(".recolector-icon" ).html(data.documentElement);
+    });
+
+    $.get( "img/terminator.svg", function( data ) {
+        $(".terminator-icon" ).html( data.documentElement );
+    });
+</script>
+</body>
+</html>
