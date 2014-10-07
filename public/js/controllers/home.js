@@ -93,7 +93,7 @@ module.controller('HomeController',function($scope,$filter,WorldService,$locatio
 
     $scope.startSector2d = function(){
         WorldService.updateSector(function(){
-            window.location.href = '/map?id=' +  $scope.selectedSector.id;
+            window.location.href = "/map?id=" + $scope.selectedSector.id;
         },function(){
               alert('hubo un error al intentar iniciar el juego');
             },{"id":$scope.selectedSector.id,"status":"start"});
@@ -101,7 +101,7 @@ module.controller('HomeController',function($scope,$filter,WorldService,$locatio
 
      $scope.startSector3d = function(){
         WorldService.updateSector(function(){
-            window.location.href = '/wglmap?id=' +  $scope.selectedSector.id;
+            window.location.href = "/wglmap?id=" + $scope.selectedSector.id;
         },function(){
               alert('hubo un error al intentar iniciar el juego');
             },{"id":$scope.selectedSector.id,"status":"start"});

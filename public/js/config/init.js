@@ -7,17 +7,16 @@ var appName = "codegence"
 require.config({
     baseUrl: "js",
     paths:{
-        "jquery" : "vendor/jquery",
+        "jquery" : "http://code.jquery.com/jquery-2.1.1.min",
         "foundation": "foundation.min",
-        "angular": "angular.min",
+        "angular": "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min",
         "models": "models",
         "controllers": "controllers",
         "services": "services",
         "directives":"directives",
-        //"x3dom": "http://www.x3dom.org/download/x3dom",
         "index": "controllers/home",
-        "angular-route":"angular-route.min",
-        "angular-cookies":"angular-cookies"
+        "angular-route":"https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.min",
+        "angular-cookies":"https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-cookies.min"
     },
     shim:{
         "angular":{
@@ -56,7 +55,7 @@ require.config({
 // Angular Configuration
 define('app',['angular','angular-cookies'],function(){
     var app = angular.module(appName,['ngRoute','ngCookies']);
-    app.config(function ($interpolateProvider,$httpProvider,$routeProvider) {
+    app.config(function ($interpolateProvider,$httpProvider,$routeProvider,$locationProvider) {
             $interpolateProvider.startSymbol('[[');
             $interpolateProvider.endSymbol(']]');
 
@@ -69,14 +68,16 @@ define('app',['angular','angular-cookies'],function(){
                     templateUrl: '/sector.html',
                     controller: 'SectorCtrl'
                 }).
+                when('/wglmap',{
+                    redirectTo: '/wglmap.html'
+                }).
                 when('/map',{
                     redirectTo: '/map.html'
-                }).when('/wglmap',{
-                    redirectTo: '/wglmap.html'
                 }).otherwise({
                     redirectTo: '/'
                 });
 
+            $locationProvider.html5Mode(true);
         }
     );
 
