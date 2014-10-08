@@ -15,15 +15,13 @@ var lights = [];
 var scale = 17;
 var counter = 0;
 var cameraTarget;
-var plane, material,idRecycler;
+var plane, material;
+var animables = [];
 var modelsPath = 'wglmodels/';
 
 $(document).ready(function() {
 	// Init 3D environment
 	init();
-	
-	// Setup connection
-	//setup(window.location.search.split('=')[1]);
 	
 	// Animate 3D
 	animate();
@@ -88,12 +86,18 @@ function handleInitSector(event, data) {
 				val.type='rock_02';
 			}
 		}
-		if(val.type=='recycler'){ idRecycler = val.id; }
 		objects[val.id] = models[val.type].clone();
-		objects[val.id].position.set(val.position[0]*scale, 0, val.position[1]*scale);
+		objects[val.id].position.set(val.position[1]*scale, 0, val.position[0]*scale);
 		objects[val.id].rotation.set(0, val.rotation, 0);
 		objects[val.id].type = val.type;
 		scene.add(objects[val.id]);
+		if(val.type=='recycler'){
+			animables.push(val.id);
+			objects[val.id].animate = function(){
+				this.getObjectByName('recycler_rotor').rotation.y-=.2;
+				this.getObjectByName('recycler_tank').rotation.y+=.1;
+			}
+		}
     });
 }
 
@@ -114,7 +118,7 @@ function handleUpdateSector(event, data) {
 			}
 		}
 		objects[val.id] = models[val.type].clone();
-		objects[val.id].position.set(val.position[0]*scale, 0, val.position[1]*scale);
+		objects[val.id].position.set(val.position[1]*scale, 0, val.position[0]*scale);
 		objects[val.id].rotation.set(0, val.rotation, 0);
 		objects[val.id].type = val.type;
 		scene.add(objects[val.id]);
@@ -123,7 +127,7 @@ function handleUpdateSector(event, data) {
 	// Update existing objects
     $(data.objects).each(function(i, val) {
 		if(val.position){
-			objects[val.id].position.set(val.position[0]*scale, 0, val.position[1]*scale);
+			objects[val.id].position.set(val.position[1]*scale, 0, val.position[0]*scale);
 		}
 		if(val.rotation){
 			objects[val.id].rotation.set(0, val.rotation, 0);
@@ -231,9 +235,8 @@ function onWindowResize() {
 
 // Animation
 function animate() {
-	if(idRecycler){
-		objects[idRecycler].getObjectByName('recycler_rotor').rotation.y-=.2;
-		objects[idRecycler].getObjectByName('recycler_tank').rotation.y+=.1;
+	for(idx in animables){
+		objects[animables[idx]].animate();
 	}
 	requestAnimationFrame(animate);
 	render();
