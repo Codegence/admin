@@ -72,8 +72,8 @@ function handleInitSector(event, data) {
 	// Add terrain
 	width = data.width * scale;
 	height = data.height * scale;
-	plane = new THREE.Mesh(new THREE.PlaneGeometry( width, height, 1, 1 ), material );
-	plane.position.set(width/2, 0, height/2);
+	plane = new THREE.Mesh(new THREE.PlaneGeometry( height, width, 1, 1 ), material );
+	plane.position.set(height/2, 0, width/2);
 	plane.rotation.set(-Math.PI/2, 0, 0);
 	scene.add( plane );
 
