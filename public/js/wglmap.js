@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2014  Pablo Marco del Pont
+    This file is part of Codegence.
+
+    Codegence is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Codegence is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Codegence. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 // connection
 var host = "172.17.201.138:8080";
 var httphost = "http://" + host;
@@ -22,11 +40,11 @@ var modelsPath = 'wglmodels/';
 $(document).ready(function() {
 	// Init 3D environment
 	init();
-	
+
 	// Animate 3D
 	animate();
-	
-	// Add keydown handler for arrows navigation 
+
+	// Add keydown handler for arrows navigation
 	document.addEventListener( 'keydown', onDocumentKeyDown, false );
 });
 
@@ -107,7 +125,7 @@ function handleUpdateSector(event, data) {
     $(data.deletedObjects).each(function(i, val) {
 		scene.remove(objects[val.id]);
     });
-	
+
 	// Add new objects
     $(data.newObjects).each(function(i, val) {
 		if(val.type=='rock'){
@@ -123,7 +141,7 @@ function handleUpdateSector(event, data) {
 		objects[val.id].type = val.type;
 		scene.add(objects[val.id]);
     });
-	
+
 	// Update existing objects
     $(data.objects).each(function(i, val) {
 		if(val.position){
@@ -164,7 +182,7 @@ function init() {
 
 	// Scene
 	scene = new THREE.Scene();
-	
+
 	// Controls
 	controls = new THREE.OrbitControls(camera);
 	controls.center.set(115, 192, 443);
@@ -176,7 +194,7 @@ function init() {
 	texture.wrapT = THREE.RepeatWrapping;
 	texture.repeat.set( 4, 4 );
 	material = new THREE.MeshLambertMaterial( {color: 0xc0c0c0, map:texture} );
-	
+
 	// Ambient light
 	var ambient = new THREE.AmbientLight(0x202020);
 	scene.add(ambient);

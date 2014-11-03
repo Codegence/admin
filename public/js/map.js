@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2014  Fernando Farias
+    This file is part of Codegence.
+
+    Codegence is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Codegence is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Codegence. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 var host = "172.17.201.138:8080";
 var httphost = "http://" + host;
 
@@ -126,7 +144,7 @@ function playSound( sound ) {
 
 function UrlExists(url)
 {
-    
+
     var http = new XMLHttpRequest();
     http.open('HEAD', url, false);
     http.send();
@@ -170,7 +188,7 @@ function handleInitSector(event, data) {
 }
 
 function handleUpdateSector(event, data) {
-    $(data.deletedObjects).each(function(i, val) {        
+    $(data.deletedObjects).each(function(i, val) {
         var obj = stage.get('#' + val.id)[0];
         if(obj !== undefined)
             obj.remove();
