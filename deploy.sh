@@ -16,8 +16,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Codegence. If not, see <http://www.gnu.org/licenses/>.
 
-rm -rf /var/www/uxadmin
-mkdir -p /var/www/uxadmin
-cp public/* /var/www/uxadmin -R
+rm -rf /var/www/admin
+mkdir -p /var/www/admin
+cp public/* /var/www/admin -R
 service nginx start
 

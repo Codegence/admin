@@ -96,8 +96,7 @@ define('app',['angular','angular-cookies'],function(){
     );
 
     app.constant('globals', {
-        "host": "172.17.201.138:8080",
-        //"host": "localhost:8080",
+        "host": "localhost:8080",
         "protocol": "http"
     });
 

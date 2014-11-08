@@ -17,7 +17,7 @@
 */
 
 // connection
-var host = "172.17.201.138:8080";
+var host = "localhost:8080";
 var httphost = "http://" + host;
 var socket;
 
