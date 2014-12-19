@@ -1,7 +1,7 @@
 {
-  "name": "CodeCraftAdmin",
+  "name": "Codegence",
   "version": "1.0.0",
-  "description": "Web Adminstrator for CodeCraft",
+  "description": "Web Adminstrator for Codegence",
   "scripts": {
     "start": "node app.js"
   },
@@ -13,5 +13,14 @@
     "method-override": "^2.1.2",
     "morgan": "^1.2.2",
     "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-ng-annotate": "^0.7.0",
+    "install": "^0.1.7",
+    "npm": "^2.1.8"
   }
 }

@@ -1,7 +1,7 @@
 /*
     Copyright (C) 2014  Gaston Kaltner
     This file is part of Codegence.
-
+ 
     Codegence is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -96,7 +96,8 @@ define('app',['angular','angular-cookies'],function(){
     );
 
     app.constant('globals', {
-        "host": "localhost:8080",
+        "host": "world.codegence.com",
+        //"host": "localhost:8080",
         "protocol": "http"
     });
 

@@ -36,6 +36,7 @@ var cameraTarget;
 var plane, material;
 var animables = [];
 var modelsPath = 'wglmodels/';
+var soundsPath = 'sound/';
 
 $(document).ready(function() {
 	// Init 3D environment
@@ -51,8 +52,9 @@ $(document).ready(function() {
 // Setup connection
 function setup(sectorId){
 	connect("ws://" + host + "/sectors/" + sectorId + "/overseer");
-	$('body').on('initSector', handleInitSector);
-	$('body').on('updateSector', handleUpdateSector);
+    var body = $('body');
+	body.on('initSector', handleInitSector);
+	body.on('updateSector', handleUpdateSector);
 }
 
 function connect(host){
@@ -114,7 +116,10 @@ function handleInitSector(event, data) {
 			objects[val.id].animate = function(){
 				this.getObjectByName('recycler_rotor').rotation.y-=.2;
 				this.getObjectByName('recycler_tank').rotation.y+=.1;
-			}
+			};
+            objects[val.id].sound = new Sound(1000,models[val.type].audioProperties,models[val.type].audioProperties.onUpdateCallback);
+            objects[val.id].sound.position.copy(objects[val.id].position);
+            objects[val.id].sound.play();
 		}
     });
 }
@@ -139,6 +144,7 @@ function handleUpdateSector(event, data) {
 		objects[val.id].position.set(val.position[1]*scale, 0, val.position[0]*scale);
 		objects[val.id].rotation.set(0, val.rotation, 0);
 		objects[val.id].type = val.type;
+
 		scene.add(objects[val.id]);
     });
 
@@ -224,9 +230,22 @@ function init() {
 	loader.load(modelsPath + 'recycler_body.obj', modelsPath + 'recycler_body.mtl', function(object) { object.name = 'recycler_body';object.children[2].material.emissive.set('#404040'); models['recycler'].add(object); checkLoading(); });
 	loader.load(modelsPath + 'recycler_rotor.obj', modelsPath + 'recycler_rotor.mtl', function(object) { object.name = 'recycler_rotor'; models['recycler'].add(object); checkLoading(); });
 	loader.load(modelsPath + 'recycler_tank.obj', modelsPath + 'recycler_tank.mtl', function(object) { object.name = 'recycler_tank' ;object.children[2].material.emissive.set('#808080');models['recycler'].add(object); checkLoading(); });
+    //models['recycler'].soundSource = [soundsPath + 'recycler_sound.ogg'];
 
+    models['recycler'].audioProperties = {
+        src : soundsPath + 'recycler_sound.ogg',
+        playbackRate : 2,
+        loop : true,
+        volume: 1,
+        radius: 1000,
+        onUpdateCallback : function(audio){
+            if(audio.loop && audio.currentTime >= audio.duration*0.90){
+                audio.currentTime = 0.08;
+            }
+        }
+    };
 
-	// Setup render
+    // Setup render
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	container.appendChild(renderer.domElement);
@@ -263,5 +282,45 @@ function animate() {
 // Render
 function render() {
 	controls.update( clock.getDelta() );
+    for(var idx in objects){
+        if(objects[idx] && objects[idx].sound){
+            objects[idx].sound.update(camera);
+        }
+    }
 	renderer.render(scene, camera);
+}
+
+function Sound(properties) {
+    var audio = document.createElement( 'audio' );
+
+    if(properties  && typeof properties === "object"){
+        for(var property in properties){
+            if(properties[property] != null && properties[property] != undefined && typeof properties[property] !== "function") {
+                audio[property] = properties[property];
+            }
+        }
+    }
+
+    this.position = new THREE.Vector3();
+    this.play = function () {
+        audio.play();
+    };
+
+    this.stop = function(){
+        audio.pause();
+        audio.currentTime = 0;
+    };
+
+    this.update = function ( camera ) {
+        var distance = this.position.distanceTo( camera.position );
+        if ( distance <= radius ) {
+            audio.volume = properties.volume * ( 1 - distance / radius );
+        } else {
+            audio.volume = 0;
+        }
+
+        if(properties.onUpdateCallback && typeof properties.onUpdateCallback == "function") {
+            properties.onUpdateCallback(audio);
+        }
+    };
 }

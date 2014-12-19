@@ -18,7 +18,7 @@
 
 var module = angular.module(appName);
 
-module.controller('SectorCtrl',function($scope,WorldService,Utilities){
+module.controller('SectorCtrl',['$scope', 'WorldService', 'Utilities', function($scope,WorldService,Utilities){
 
     $scope.newFaction = {};
 
@@ -64,4 +64,4 @@ module.controller('SectorCtrl',function($scope,WorldService,Utilities){
         },$scope.selectedSector.id,faction.id);
     };
 
-});
+}]);

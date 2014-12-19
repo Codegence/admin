@@ -20,7 +20,7 @@ var module = angular.module(appName);
 
 limitNameSector = 20;
 
-module.controller('HomeController',function($scope,$filter,WorldService,$location,Utilities){
+module.controller('HomeController',['$scope', '$filter', 'WorldService', '$location', 'Utilities', function($scope,$filter,WorldService,$location,Utilities){
     $scope.sectores = [];
     $scope.newSector = null;
     $scope.selectedSector = null;
@@ -145,4 +145,4 @@ module.controller('HomeController',function($scope,$filter,WorldService,$locatio
         element.removeClass('fadeOutDownBig');
         element.addClass('fadeInRightBig');
     });*/
-});
+}]);
